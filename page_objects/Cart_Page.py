@@ -141,8 +141,6 @@ class Cart_Page(Base_Page):
 
     def verify_cart(self, expected_cart):
         "Verify the (name,price) of items in cart and the total"
-        import pdb
-        pdb.set_trace()
         actual_cart = self.get_cart_items()
         result_flag = self.verify_cart_size(expected_cart, actual_cart)
         result_flag &= self.verify_extra_items(expected_cart, actual_cart)

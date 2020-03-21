@@ -111,7 +111,7 @@ class Cart_Page(Base_Page):
                                    positive="... the expected price matched to %d" % product.price,
                                    negative="... the expected price did not match. Expected: %d but Obtained: %d" % (product.price, actual_price))
 
-        return item_match_flag
+        return not item_match_flag
 
     def get_total_price(self):
         "Return the cart total"
@@ -141,11 +141,14 @@ class Cart_Page(Base_Page):
 
     def verify_cart(self, expected_cart):
         "Verify the (name,price) of items in cart and the total"
+        import pdb
+        pdb.set_trace()
         actual_cart = self.get_cart_items()
         result_flag = self.verify_cart_size(expected_cart, actual_cart)
         result_flag &= self.verify_extra_items(expected_cart, actual_cart)
         if result_flag is False:
-            result_flag &= self.verify_missing_item(expected_cart, actual_cart)
+            result_flag = not self.verify_missing_item(
+                expected_cart, actual_cart)
         result_flag &= self.verify_cart_total(expected_cart)
 
         return result_flag
